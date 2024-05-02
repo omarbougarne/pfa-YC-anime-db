@@ -32,11 +32,16 @@
                                     <a href="{{ route('animes.show', $anime->id) }}" class="btn btn-primary btn-round" style="width: 49%">
                                         <i class="fa fa-eye"></i>
                                     </a> &nbsp;
-                                    @if(Auth::check())
-    <a href="{{ url('/animes/add/' . $anime->id) }}" class="btn btn-success btn-round" style="width: 49%">
-        <i class="fa fa-plus"></i>
-    </a>
+                                    <!-- Inside your foreach loop -->
+@if(Auth::check())
+<form action="{{ route('animes.addToUserList', $anime->id) }}" method="POST">
+    @csrf
+    <button type="submit" class="btn btn-success btn-round" style="width: 49%">
+        <i class="fa fa-plus"></i> Add
+    </button>
+</form>
 @endif
+
 
 
                                 </div>
@@ -46,9 +51,14 @@
                 @endforeach
                 <div class="row">
                     <div class="col-12">
-                        {{ $animes->links() }}
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination pagination-sm"> <!-- Use pagination-lg for larger buttons -->
+                                {{ $animes->links() }}
+                            </ul>
+                        </nav>
                     </div>
                 </div>
+
             @else
                 <div class="alert alert-warning mt-2" role="alert">
                     No anime with "{{ request()->query('search') }}" was found!

@@ -32,23 +32,36 @@ class AnimeController extends Controller
 
 public function userList(Request $request)
 {
-
-    $animes = Anime::get();
-    return view('anime.user_list')->with('animes', $animes);
+    $user = Auth::user(); // Retrieve the authenticated user
+    $animes = $user->animes; // Retrieve animes associated with the authenticated user
+    return view('anime.user_list')->with('animes', $animes)->with('user', $user);
 }
 
+
+
+
+
+// Inside your controller method
 public function addToUserList(Request $request, $id)
 {
+    // Retrieve the authenticated user's ID
+    $userId = Auth::id();
+
     $anime = Anime::find($id);
     if (!$anime) {
         return redirect(route('animes.index'))->with('error', 'Anime not found');
     }
 
+    // Attach the anime to the authenticated user's list
     $user = Auth::user();
-    $user->animes()->attach($anime, ['user_id' => $user->id]);
+    $user->animes()->attach($anime, ['user_id' => $userId]);
 
-    return redirect(route('animes.user_list'))->with('success', $anime->title . ' added to your list');
+    $userName = $user->name;
+
+    return redirect(route('animes.user_list'))->with('success', $anime->title . ' added to ' . $userName . '\'s list');
 }
+
+
 public function showUserList($userId)
 {
     // Retrieve the user's list of anime
@@ -58,6 +71,7 @@ public function showUserList($userId)
     // Pass the user and the list of anime to the view
     return view('anime.user_list', ['animes' => $animes, 'user' => $user]);
 }
+
 
 
 

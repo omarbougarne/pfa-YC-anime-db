@@ -55,7 +55,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     //Animes: User List
     Route::patch('/animes/update_watched/{id}', [AnimeController::class, 'updateWatched'])->name('animes.update_watched');
-    Route::get('/animes/add/{id}', [AnimeController::class, 'addToUserList']);
+    Route::get('/animes/add/{id}', [AnimeController::class, 'addToUserList'])->name('animes.addToUserList');
     Route::get('/animes/remove/{id}', [AnimeController::class, 'removeFromUserList']);
     // Route::delete('/animes/{id}', [AnimeController::class, 'removeFromList'])->name('animes.removeFromList');
     Route::get('/animes/my-list', [AnimeController::class, 'userList'])->name('animes.user_list');

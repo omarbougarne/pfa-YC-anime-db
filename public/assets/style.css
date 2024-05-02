@@ -152,11 +152,11 @@ a {
     position: absolute;
 }
 
-header {
+/* header {
     background: url('https://i.pinimg.com/736x/6f/3b/ab/6f3bab0c24bd2f43bfc4af14c484c848.jpg') center center no-repeat;
     background-size: cover;
     height: 500px;
-}
+} */
 
 
 .toastr-notification {
